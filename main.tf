@@ -29,7 +29,7 @@ module "acm" {
 
 
 # TFE AWS Pre-requisites
-module "aws_prerequisites" {
+module "pre_req_primary" {
   source = "./terraform-aws-tfe-prerequisites"
   
     common_tags          = var.common_tags
