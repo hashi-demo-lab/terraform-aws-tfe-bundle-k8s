@@ -29,16 +29,16 @@ resource "acme_certificate" "certificate" {
 
 resource "local_file" "pub_key_chain" {
   content  = "${acme_certificate.certificate.certificate_pem}${acme_certificate.certificate.issuer_pem}"
-  filename = "${path.module}/tfe.pub"
+  filename = "./certs/tfe.pub"
 }
 
 resource "local_file" "private_key" {
   content  = nonsensitive(acme_certificate.certificate.private_key_pem)
-  filename = "${path.module}/tfe.key"
+  filename = "./certs/tfe.key"
 }
 
 resource "local_file" "pub_key_no_root" {
   content  = acme_certificate.certificate.certificate_pem
-  filename = "${path.module}/tfe-no-root.pub"
+  filename = "./certs/tfe-no-root.pub"
 }
 
