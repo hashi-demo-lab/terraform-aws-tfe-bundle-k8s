@@ -45,6 +45,7 @@ variable "route53_failover_record" {
   description = "If set, creates a Route53 failover record.  Ensure that the record name is the same between both modules.  Also, the Record ID needs to be unique per module"
 }
 
+
 variable "lb_sg_rules_details" {
   type = object({
     tfe_api_ingress = optional(object({
@@ -319,4 +320,27 @@ variable "lb_listener_details" {
   })
   description = "Configures the LB Listeners for TFE"
   default     = {}
+}
+
+variable "route53_record_health_check_enabled" {
+  type        = bool
+  description = "Enabled evaluation of target health for direct LB record"
+  default     = false
+}
+
+variable "route53_private_zone" {
+  type        = bool
+  description = "Boolean that when true, designates the data lookup to use a private Route 53 zone name"
+  default     = false
+}
+
+variable "acm_validation_method" {
+  description = "Which method to use for validation. DNS or EMAIL are valid. This parameter must not be set for certificates that were imported into ACM and then into Terraform."
+  type        = string
+  default     = "DNS"
+
+  validation {
+    condition     = var.acm_validation_method == null || contains(["DNS", "EMAIL"], coalesce(var.acm_validation_method, 0))
+    error_message = "This variable is optional. Valid values are DNS, EMAIL, or null."
+  }
 }

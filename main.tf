@@ -1,5 +1,4 @@
 #Certificate
-
 module "tfe-cert" {
   source = "./supplemental-modules/generate-cert"
 
@@ -11,7 +10,25 @@ module "tfe-cert" {
 }
 
 
+# Route53 Domain Name Generation
+data "aws_route53_zone" "this" {
+  name         = var.route53_zone_name
+  private_zone = var.route53_private_zone
+}
 
+# Certificate Generation
+module "acm" {
+  source = "./terraform-aws-tfe-prerequisites/modules/ingress/modules/acm"
+
+  domain_name               = "${var.route53_failover_record.record_name}.${var.route53_zone_name}"
+  subject_alternative_names = []
+  zone_id                   = data.aws_route53_zone.this.id
+  validation_method         = var.acm_validation_method
+}
+
+
+
+# TFE AWS Pre-requisites
 module "aws_prerequisites" {
   source = "./terraform-aws-tfe-prerequisites"
   
@@ -44,15 +61,11 @@ module "aws_prerequisites" {
     # Logging
     create_log_group = true
 
-    #------------------------------------------------------------------------------
     # Keypair
-    #------------------------------------------------------------------------------
     create_ssh_keypair = var.create_ssh_keypair
     ssh_public_key     = var.ssh_public_key
 
-    #------------------------------------------------------------------------------
     # Database
-    #------------------------------------------------------------------------------
     create_db_cluster        = true
     create_db_global_cluster = false
     db_is_primary_cluster    = true
@@ -61,15 +74,12 @@ module "aws_prerequisites" {
     db_password              = var.db_password
     db_database_name         = var.db_database_name
 
-    #------------------------------------------------------------------------------
     # Load Balancer
-    #------------------------------------------------------------------------------
     create_lb                 = false
     create_lb_security_groups = false
-    create_lb_certificate     = true
-    #------------------------------------------------------------------------------
+    create_lb_certificate     = false
+
     # Redis
-    #------------------------------------------------------------------------------
     create_redis_replication_group = var.create_redis_replication_group
     redis_password                 = var.redis_password
 }
