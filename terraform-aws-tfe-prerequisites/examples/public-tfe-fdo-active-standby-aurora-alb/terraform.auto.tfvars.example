@@ -1,0 +1,164 @@
+#------------------------------------------------------------------------------
+# General
+#------------------------------------------------------------------------------
+
+# Prefix for all resources created by this module
+friendly_name_prefix = "hashicat"
+
+# AWS Tagging Configuration
+primary_common_tags = {
+  deployment = "dev"
+  site       = "one"
+}
+
+secondary_common_tags = {
+  deployment = "dev"
+  site       = "one"
+}
+
+# TFE Deployment Configuration
+tfe_active_active        = false
+tfe_fdo_release_sequence = "v202309-1"
+product                  = "tfefdo"
+
+create_ssh_keypair = true
+ssh_public_key     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDXWpQxor5ghZCeyR/t3E0zsmnoPRZC/vAat1uVpJEyfJsa8m37sAE5xD+pior9fWe6anyMXGTQbivVr70eGtO5HmH0g6S9Tjak0t03QVulFuLXqhKQFIcwtcZghBHs4/W5GQyDcd7MLNrzsMUMX9sL8AKQHzERj6UczaH3PqTdUFS2aVkUfXr5gSOVOkf+k73p8MOfWN8lUNW6JgA1fhNu/2xhqdJWECjMgEdZB+DBkprQlFZ/ZR34rchf2ZAoMmTblGxCSWms5f2WcQ2PTDhdHuISizlY0BSL6eQjLsDf7eZJsnEIhqCVRuN2tqvigIA2etJD+rK8EaOF17138buJOVIQaaEFpxFwUfAKuHb71u9kMzsFxX/UsYuQ0e07YkEtMakk7oeLAJJXn1/wfj8vTjqv7+udvGGUFb3ILFJPbd4gzW36gdgYWKanEqVsJ0oSAXPCTbwdTIpj11GNYZe2AuipEjIHa0syCNE+5HODfIt/DE1JFerYwTuXBPJvy4ZWh6YGdaHAHGLhZqdOW1BJQe9lSw4ebo1VteC4na+Yjjj0FS7+qLWsvHZ2khJXX74K+hDMOAKMfO3rcmGWWhXNxxWQP5QgwpsPZ3dEf8FKwBq6Y3hjZvI1H2rZM9VPz3zCnKt5a0e8OviDLIQ3eSb6DKehhLScWxtcCEFp4t6Mbw=="
+
+# This has been commented to ensure users are prompted for their region. Uncomment it and supply your region here.
+#region_primary = "your-region"
+#region_secondary = "your-region"
+#------------------------------------------------------------------------------
+# Network Configuration
+#------------------------------------------------------------------------------
+vpc_enable_ssm              = true
+primary_permit_all_egress   = true
+secondary_permit_all_egress = true
+
+tfe_hostname      = "tfe.hashicat.aws.sbx.hashicorpdemo.com"
+route53_zone_name = "hashicat.aws.sbx.hashicorpdemo.com"
+
+primary_route53_failover_record = {
+  record_name         = "tfe"
+  set_id              = "fso1"
+  lb_failover_primary = true
+}
+secondary_route53_failover_record = {
+  record_name         = "tfe"
+  set_id              = "fso2"
+  lb_failover_primary = false
+}
+
+
+primary_vpc_cidr        = "10.1.0.0/16"
+primary_public_subnets  = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"]
+primary_private_subnets = ["10.1.255.0/24", "10.1.254.0/24", "10.1.253.0/24"]
+
+secondary_vpc_cidr        = "10.2.0.0/16"
+secondary_public_subnets  = ["10.2.1.0/24", "10.2.2.0/24", "10.2.3.0/24"]
+secondary_private_subnets = ["10.2.255.0/24", "10.2.254.0/24", "10.2.253.0/24"]
+
+
+lb_sg_rules_details = {
+  tfe_api_ingress = {
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tfe_console_ingress = {
+    create = false
+  }
+}
+
+lb_target_groups = {
+  tfe_console = {
+    create = false
+  }
+}
+
+lb_listener_details = {
+  tfe_console = {
+    create = false
+  }
+}
+
+#------------------------------------------------------------------------------
+# Database Configuration
+#------------------------------------------------------------------------------
+db_username      = "tfe"
+db_password      = "correct-horse-battery-staple"
+db_database_name = "tfe"
+
+
+#------------------------------------------------------------------------------
+# Secret Manager Configuration - Initial TFE Secrets
+#------------------------------------------------------------------------------
+secretsmanager_secrets = {
+  tfe = {
+    console_password = {
+      name        = "console_password-test"
+      description = "Console password used in the TFE installation"
+      generate    = true
+    }
+    enc_password = {
+      name        = "enc_password-test"
+      description = "Encryption password used in the TFE installation"
+      data        = "monday-sullen-smashing-embassy"
+      generate    = false
+    }
+    license = {
+      name        = "tfe-license"
+      description = "License for TFE FDO"
+      path        = "/Users/hashicat/Desktop/licenses/tfefdo.hclic"
+    }
+  }
+  cert_pem_secret = {
+    name = "cert_pem_public"
+    path = "/Users/hashicat/Desktop/licenses/ssl/wildcard.pub"
+  }
+  cert_pem_private_key_secret = {
+    name = "cert_pem_private"
+    path = "/Users/hashicat/Desktop/licenses/ssl/wildcard.key"
+  }
+  ca_certificate_bundle = {
+    name = "cert_pem_bundle"
+    path = "/Users/hashicat/Desktop/licenses/ssl/wildcard-chain.pub"
+  }
+}
+
+#------------------------------------------------------------------------------
+# IAM Configuration
+#------------------------------------------------------------------------------
+iam_resources = {
+  role_name   = "role"
+  policy_name = "policy"
+  ssm_enable  = true
+}
+
+#------------------------------------------------------------------------------
+# S3 Configuration
+#------------------------------------------------------------------------------
+
+secondary_s3_buckets = {
+  bootstrap = {
+    bucket_name         = "tfe-dorne-bootstrap"
+    force_destroy       = true
+    is_secondary_region = true
+  },
+  tfe_app = {
+    bucket_name         = "tfe-dorne-app"
+    force_destroy       = true
+    is_secondary_region = true
+  },
+  logging = {
+    bucket_name         = "tfe-dorne-logging"
+    force_destroy       = true
+    is_secondary_region = true
+  }
+}
+
+#------------------------------------------------------------------------------
+# Logging Configuration
+#------------------------------------------------------------------------------
+secondary_log_forwarding_enabled = true
+secondary_log_group_name         = "tfe-dorne-log-group"
+log_forwarding_type              = "cloudwatch"
+primary_log_forwarding_enabled   = true
+primary_log_group_name           = "tfe-westeros-log-group"

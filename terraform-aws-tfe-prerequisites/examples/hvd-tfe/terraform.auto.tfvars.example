@@ -1,0 +1,131 @@
+#------------------------------------------------------------------------------
+# General
+#------------------------------------------------------------------------------
+
+# Prefix for all resources created by this module
+friendly_name_prefix = "hashicat"
+
+# This has been commented to ensure users are prompted for their region. Uncomment it and supply your region here.
+#region = "your-region"
+
+# AWS Tagging Configuration
+common_tags = {
+  deployment = "dev"
+  site       = "one"
+}
+
+# TFE Deployment Configuration
+tfe_active_active = true
+product           = "tfefdo"
+
+create_ssh_keypair = true
+ssh_public_key     = "ssh-rsa AAAAB3NzaC1...ScWxtcCEFp4t6Mbw=="
+
+#------------------------------------------------------------------------------
+# Network Configuration
+#------------------------------------------------------------------------------
+vpc_enable_ssm = true
+
+route53_zone_name = "hashicat.aws.sbx.hashicorpdemo.com"
+route53_failover_record = {
+  record_name         = "tfe"
+  set_id              = "fso1"
+  lb_failover_primary = true
+}
+
+lb_type = "network"
+lb_sg_rules_details = {
+  tfe_api_ingress = {
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tfe_console_ingress = {
+    create = false
+  }
+}
+
+lb_target_groups = {
+  tfe_api = {
+    protocol = "TCP"
+  }
+  tfe_console = {
+    create = false
+  }
+}
+
+lb_listener_details = {
+  tfe_console = {
+    create = false
+  }
+}
+#------------------------------------------------------------------------------
+# Database Configuration
+#------------------------------------------------------------------------------
+db_username      = "tfe"
+db_password      = "correct-horse-battery-staple"
+db_database_name = "tfe"
+
+create_redis_replication_group = true
+redis_password                 = "faculty-untried-cohesive-voucher"
+
+#------------------------------------------------------------------------------
+# Secret Manager Configuration - Initial TFE Secrets
+#------------------------------------------------------------------------------
+secretsmanager_secrets = {
+  tfe = {
+    license = {
+      name        = "tfe-license"
+      description = "TFE License for FDO"
+      path        = "/Users/hashicat/Desktop/licenses/tfefdo.hclic"
+    }
+    console_password = {
+      name        = "console_password-test"
+      description = "Console password used in the TFE installation"
+      generate    = true
+    }
+    enc_password = {
+      name        = "enc_password-test"
+      description = "Encryption password used in the TFE installation"
+      generate    = true
+    }
+  }
+  cert_pem_secret = {
+    name = "cert_pem_public"
+    path = "/Users/hashicat/Desktop/licenses/ssl/wildcard.pub"
+  }
+  cert_pem_private_key_secret = {
+    name = "cert_pem_private"
+    path = "/Users/hashicat/Desktop/licenses/ssl/wildcard.key"
+  }
+  ca_certificate_bundle = {
+    name = "cert_pem_bundle"
+    path = "/Users/hashicat/Desktop/licenses/ssl/wildcard-chain.pub"
+  }
+}
+
+#------------------------------------------------------------------------------
+# IAM Configuration
+#------------------------------------------------------------------------------
+iam_resources = {
+  role_name   = "role"
+  policy_name = "policy"
+  ssm_enable  = true
+}
+
+#------------------------------------------------------------------------------
+# S3 Configuration
+#------------------------------------------------------------------------------
+s3_buckets = {
+  bootstrap = {
+    bucket_name   = "tfe-bootstrap"
+    force_destroy = true
+  },
+  tfe_app = {
+    bucket_name   = "tfe-app"
+    force_destroy = true
+  },
+  logging = {
+    bucket_name   = "tfe-logging"
+    force_destroy = true
+  }
+}
+

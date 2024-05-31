@@ -1,0 +1,67 @@
+#------------------------------------------------------------------------------
+# Common
+#------------------------------------------------------------------------------
+friendly_name_prefix     = "hashicat"
+db_username              = "tfe"
+db_password              = "HashiCorp123!"
+db_database_name         = "tfe"
+tfe_active_active        = false
+tfe_fdo_release_sequence = "v202309-1"
+product                  = "tfefdo"
+lb_type                  = "network"
+log_forwarding_type      = "cloudwatch"
+#------------------------------------------------------------------------------
+# Primary Site - US East 2
+#------------------------------------------------------------------------------
+# This has been commented to ensure users are prompted for their region. Uncomment it and supply your region here.
+#primary_region = "your-region"
+primary_ssh_keypair_name          = "hashicat-e623be-tfe-keypair"
+primary_vpc_id                    = "vpc-0c70e83e6b588d631"
+primary_tfe_hostname              = "tfe.hashicat.aws.sbx.hashicorpdemo.com" # These should match the `secondary_tfe_hostname` if using our modules since we are using failover records.
+primary_iam_profile_name          = "hashicat-e623be-us-east-2-tfe-deployment-role"
+primary_kms_key_arn               = "arn:aws:kms:us-east-2:441170333099:alias/tfe-tfe-bootstrap-kms"
+primary_ec2_subnet_ids            = ["subnet-0bee41b0226400065", "subnet-0c34872782362a53c", "subnet-0a253c4f6306a5584"]
+primary_lb_tg_arns                = ["arn:aws:elasticloadbalancing:us-east-2:441170333099:targetgroup/hashicat-e623be-tfe-tls-tg/65703f0c7ae55720", "arn:aws:elasticloadbalancing:us-east-2:441170333099:targetgroup/hashicat-e623be-tfe-console-tg/948e4753fb7f2e76"]
+primary_s3_app_bucket_name        = "hashicat-e623be-tfe-westeros-app-us-east-2"
+primary_s3_log_bucket_name        = "hashicat-e623be-tfe-westeros-logging-us-east-2"
+primary_cloudwatch_log_group_name = "hashicat-e623be-tfe-log-group"
+primary_log_forwarding_enabled    = true
+primary_permit_all_egress         = true
+primary_tfe_secrets_arn           = "arn:aws:secretsmanager:us-east-2:441170333099:secret:hashicat-e623be-tfe-ejr7WQ"
+primary_tfe_cert_secret_arn       = "arn:aws:secretsmanager:us-east-2:441170333099:secret:hashicat-e623be-cert_pem_public-shxkCa"
+primary_tfe_privkey_secret_arn    = "arn:aws:secretsmanager:us-east-2:441170333099:secret:hashicat-e623be-cert_pem_private-odetla"
+primary_ca_bundle_secret_arn      = "arn:aws:secretsmanager:us-east-2:441170333099:secret:hashicat-e623be-cert_pem_bundle-odetla"
+primary_db_cluster_endpoint       = "hashicat-e623be.cluster-ctqfsgswysih.us-east-2.rds.amazonaws.com"
+primary_asg_hook_value            = "hashicat-e623be-us-east-2-tfe-asg-hook"
+primary_common_tags = {
+  deployment = "test"
+  site       = "westeros"
+}
+
+#------------------------------------------------------------------------------
+# Secondary Site - US West 2
+#------------------------------------------------------------------------------
+# This has been commented to ensure users are prompted for their region. Uncomment it and supply your region here.
+#secondary_region = "your-region"
+secondary_ssh_keypair_name          = "hashicat-0f71ec-tfe-keypair"
+secondary_vpc_id                    = "vpc-00c28259c6d7c713f"
+secondary_tfe_hostname              = "tfe.hashicat.aws.sbx.hashicorpdemo.com"
+secondary_iam_profile_name          = "hashicat-0f71ec-us-west-2-tfe-deployment-role"
+secondary_kms_key_arn               = "arn:aws:kms:us-west-2:441170333099:alias/tfe-tfe-bootstrap-kms"
+secondary_ec2_subnet_ids            = ["subnet-00d0f9228288fcef3", "subnet-06a6d0ed4a28b62d7", "subnet-0731af32c8754d0b4"]
+secondary_lb_tg_arns                = ["arn:aws:elasticloadbalancing:us-west-2:441170333099:targetgroup/hashicat-0f71ec-tfe-console-tg/be46d2f4e5e0a750", "arn:aws:elasticloadbalancing:us-west-2:441170333099:targetgroup/hashicat-0f71ec-tfe-tls-tg/76f243de42742757"]
+secondary_s3_app_bucket_name        = "hashicat-0f71ec-tfe-dorne-app-us-west-2"
+secondary_s3_log_bucket_name        = "hashicat-0f71ec-tfe-dorne-logging-us-west-2"
+secondary_cloudwatch_log_group_name = "hashicat-0f71ec-tfe-dorne-log-group"
+secondary_log_forwarding_enabled    = true
+secondary_permit_all_egress         = true
+secondary_tfe_secrets_arn           = "arn:aws:secretsmanager:us-west-2:441170333099:secret:hashicat-0f71ec-tfe-6ftgUu"
+secondary_tfe_cert_secret_arn       = "arn:aws:secretsmanager:us-west-2:441170333099:secret:hashicat-0f71ec-cert_pem_public-shxkCa"
+secondary_tfe_privkey_secret_arn    = "arn:aws:secretsmanager:us-west-2:441170333099:secret:hashicat-0f71ec-cert_pem_private-shbDta"
+secondary_ca_bundle_secret_arn      = "arn:aws:secretsmanager:us-west-2:441170333099:secret:hashicat-0f71ec-cert_pem_bundle-odetla"
+secondary_db_cluster_endpoint       = "hashicat-0f71ec.cluster-c7gbkcwcruoi.us-west-2.rds.amazonaws.com"
+secondary_asg_hook_value            = "hashicat-0f71ec-us-west-2-tfe-asg-hook"
+secondary_common_tags = {
+  deployment = "test"
+  site       = "dorne"
+}
