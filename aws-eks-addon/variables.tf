@@ -14,6 +14,7 @@ variable "cluster_endpoint" {
 
 variable "cluster_version" {
   type    = string
+  default = "1.29"
 }
 
 variable "oidc_provider_arn" {
