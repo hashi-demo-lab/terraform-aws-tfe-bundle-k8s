@@ -22,10 +22,13 @@ env:
     TFE_REDIS_HOST: ${TFE_REDIS_HOST}
     TFE_REDIS_USE_AUTH: ${TFE_REDIS_USE_AUTH}
     TFE_REDIS_USE_TLS: ${TFE_REDIS_USE_TLS}
+imagePullSecrets:
+  - name: terraform-enterprise
 image:
   name: ${IMAGE_NAME}
   repository: ${IMAGE_REPOSITORY}
   tag: ${IMAGE_TAG}
+
 replicaCount: ${REPLICA_COUNT}
 service:
   type: ${SERVICE_TYPE}

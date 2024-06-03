@@ -1,8 +1,8 @@
 locals {
 
-   cert_pem_secret = file(var.cert_pem_secret)
-   cert_pem_private_key_secret = file(var.cert_pem_private_key_secret)
-   ca_certificate_bundle = file(var.ca_certificate_bundle)
+   cert_pem_secret = base64encode(file(var.cert_pem_secret))
+   cert_pem_private_key_secret = base64encode(file(var.cert_pem_private_key_secret))
+   ca_certificate_bundle = base64encode(file(var.ca_certificate_bundle))
    tfe_license = file(var.tfe_license)
 
 
@@ -33,7 +33,7 @@ locals {
     IMAGE_TAG                                               = var.image_tag
     REPLICA_COUNT                                           = var.replica_count
     SERVICE_TYPE                                            = var.service_type
-    METRICS_ENABLE                                          = "true"
+    METRICS_ENABLE                                          = "false"
     METRICS_HTTP_PORT                                       = "9090"
     METRICS_HTTPS_PORT                                      = "9091"
     PRIVATE_HTTP_PORT                                       = "8080"
@@ -48,4 +48,9 @@ locals {
 resource local_file "tfe_config_yaml" {
   content  = local.tfe_config_yaml
   filename = "${path.module}/tfe_config.yaml"
+}
+
+
+output "tfe_config_yaml" {
+  value = local.tfe_config_yaml
 }
