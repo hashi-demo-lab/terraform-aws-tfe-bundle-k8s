@@ -49,3 +49,6 @@ kubeconfig*
 
 # Ignore temporary files
 *.tmp
+
+# exclude yaml
+*.yaml

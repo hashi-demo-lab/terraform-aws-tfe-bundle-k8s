@@ -299,8 +299,8 @@ output "db_cluster_port" {
 
 output "db_password" {
   description = "The database master password"
-  value       = module.pre_req_primary.db_password
-  sensitive   = true
+  value       = nonsensitive(module.pre_req_primary.db_password)
+  sensitive   = false
 }
 
 output "db_username" {
@@ -496,9 +496,9 @@ output "redis_replication_group_arn" {
 }
 
 output "redis_password" {
-  value       = module.pre_req_primary.redis_password
+  value       = nonsensitive(module.pre_req_primary.redis_password)
   description = "Auth token that is used to access the Redis replication group."
-  sensitive   = true
+  sensitive   = false
 }
 
 output "redis_port" {

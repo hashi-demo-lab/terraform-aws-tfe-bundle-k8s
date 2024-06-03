@@ -32,16 +32,17 @@ variable "cluster_certificate_authority_data" {
 
 #TFE HELM vars
 
-variable "tfe_database_password" {}
+
 variable "tfe_encryption_password" {}
 variable "tfe_license" {}
-variable "tfe_kms_key_id" {}
-variable "tfe_redis_password" {}
+variable "kms_key_arn" {}
+
 variable "tfe_capacity_concurrency" { default = 100 }
 variable "db_cluster_endpoint" { /*default = "tfe.c0ynn81zfwhe.ap-northeast-2.rds.amazonaws.com:5432"*/ }
 variable "db_cluster_database_name" { default = "tfe" }
 variable "tfe_database_parameters" { default = "sslmode=require" }
 variable "tfe_database_user" { default = "tfe" }
+variable "db_password" {}
 variable "tfe_hostname" { /*default = "tfe.simon-lynch.sbx.hashidemos.io"*/ }
 variable "tfe_iact_subnets" { default = "0.0.0.0/0" }
 variable "s3_tfe_app_bucket_name" { /*default = "hashicorp-tfe-s3-common"*/ }
@@ -51,6 +52,7 @@ variable "tfe_object_storage_s3_server_side_encryption" { default = "aws:kms" }
 variable "tfe_object_storage_s3_use_instance_profile" { default = "true" }
 variable "tfe_object_storage_type" { default = "s3" }
 variable "redis_primary_endpoint" {}
+variable "redis_password" {}
 variable "tfe_redis_use_auth" { default = "true" }
 variable "tfe_redis_use_tls" { default = "true" }
 variable "image_name" { default = "hashicorp/terraform-enterprise" }

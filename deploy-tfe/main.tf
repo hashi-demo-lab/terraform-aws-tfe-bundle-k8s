@@ -1,16 +1,17 @@
 locals {
 
-   cert_pem_secret = file("/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe-no-root.pub")
-   cert_pem_private_key_secret = file("/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe.key")
-   ca_certificate_bundle = file("/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe.pub")
-  
+   cert_pem_secret = file(var.cert_pem_secret)
+   cert_pem_private_key_secret = file(var.cert_pem_private_key_secret)
+   ca_certificate_bundle = file(var.ca_certificate_bundle)
+   tfe_license = file(var.tfe_license)
+
 
   tfe_config_yaml = templatefile("${path.module}/template/tfefdo.tpl", {
-    TFE_DATABASE_PASSWORD                                   = var.tfe_database_password
+    TFE_DATABASE_PASSWORD                                   = var.db_password
     TFE_ENCRYPTION_PASSWORD                                 = var.tfe_encryption_password
-    TFE_LICENSE                                             = var.tfe_license
-    TFE_OBJECT_STORAGE_S3_SERVER_SIDE_ENCRYPTION_KMS_KEY_ID = var.tfe_kms_key_id
-    TFE_REDIS_PASSWORD                                      = var.tfe_redis_password
+    TFE_LICENSE                                             = local.tfe_license
+    TFE_OBJECT_STORAGE_S3_SERVER_SIDE_ENCRYPTION_KMS_KEY_ID = var.kms_key_arn
+    TFE_REDIS_PASSWORD                                      = var.redis_password
     TFE_CAPACITY_CONCURRENCY                                = var.tfe_capacity_concurrency
     TFE_DATABASE_HOST                                       = "${var.db_cluster_endpoint}:5432"
     TFE_DATABASE_NAME                                       = var.db_cluster_database_name
@@ -37,10 +38,14 @@ locals {
     METRICS_HTTPS_PORT                                      = "9091"
     PRIVATE_HTTP_PORT                                       = "8080"
     PRIVATE_HTTPS_PORT                                      = "8081"
-    TLS_CA_CERT_DATA                                        = locals.ca_certificate_bundle
-    TLS_CERT_DATA                                           = locals.cert_pem_secret
-    TLS_KEY_DATA                                            = locals.cert_pem_private_key_secret
+    TLS_CA_CERT_DATA                                        = local.ca_certificate_bundle
+    TLS_CERT_DATA                                           = local.cert_pem_secret
+    TLS_KEY_DATA                                            = local.cert_pem_private_key_secret
   })
+}
 
 
+resource local_file "tfe_config_yaml" {
+  content  = local.tfe_config_yaml
+  filename = "${path.module}/tfe_config.yaml"
 }
