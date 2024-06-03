@@ -26,11 +26,11 @@ module "eks" {
 
       instance_types = ["t3.xlarge"]
 
-      min_size     = 1
-      max_size     = 3
-      desired_size = 2
+      min_size               = 1
+      max_size               = 3
+      desired_size           = 2
       vpc_security_group_ids = [var.vpc_security_group_ids]
-    
+
     }
 
   }
@@ -39,7 +39,7 @@ module "eks" {
 
 
 
-/* access_entries = {
+  /* access_entries = {
     # One access entry with a policy associated
     single = {
       kubernetes_groups = []
@@ -58,7 +58,7 @@ module "eks" {
   } */
 
 
-} 
+}
 
 data "aws_eks_cluster" "upstream" {
   depends_on = [module.eks]
@@ -87,10 +87,8 @@ resource "aws_eks_identity_provider_config" "oidc_config" {
 
 
 ### TFE specific
-
 # get aws account id from datasource
 data "aws_caller_identity" "current" {}
-
 
 data "aws_iam_policy_document" "tf_eks_fdo_for_policy" {
   statement {

@@ -27,21 +27,21 @@ variable "tfc_hostname" {
 }
 
 variable "tfc_kubernetes_audience" {
-  type = string
+  type    = string
   default = "k8s.workload.identity"
 }
 
 variable "eks_clusteradmin_arn" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "eks_clusteradmin_username" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "vpc_security_group_ids" {
-  type = string
+  type    = string
   default = null
 } 
