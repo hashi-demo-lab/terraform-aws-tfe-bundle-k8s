@@ -16,6 +16,23 @@ data "aws_route53_zone" "this" {
   private_zone = var.route53_private_zone
 }
 
+#aws eip
+resource "aws_eip" "tfe" {
+  domain = "${var.route53_failover_record.record_name}.${var.route53_zone_name}"
+}
+
+# route53 record aws resource
+resource "aws_route53_record" "record" {
+  zone_id = data.aws_route53_zone.this.zone_id
+  name    = var.route53_failover_record.record_name
+  type    = "A"
+  ttl     = "300"
+
+  records = [aws_eip.tfe.public_ip]
+}
+
+
+
 # Certificate Generation
 module "acm" {
   source = "./terraform-aws-tfe-prerequisites/modules/ingress/modules/acm"
