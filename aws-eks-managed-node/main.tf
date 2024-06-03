@@ -24,10 +24,10 @@ module "eks" {
     one = {
       name = "node-group-1"
 
-      instance_types = ["t3.large"]
+      instance_types = ["t3.xlarge"]
 
       min_size     = 1
-      max_size     = 4
+      max_size     = 3
       desired_size = 2
       vpc_security_group_ids = [var.vpc_security_group_ids]
     
