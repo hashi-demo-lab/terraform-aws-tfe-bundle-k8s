@@ -3,6 +3,11 @@ variable "vpc_id" {
   type    = string
 }
 
+variable "region" {
+  type    = string
+  default = "ap-southeast-2"
+}
+
 variable "cluster_name" {
   type    = string
   default = "eks-cluster"
