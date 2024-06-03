@@ -457,7 +457,7 @@ output "route53_regional_record_name" {
 }
 
 output "route53_regional_fqdn" {
-  value       = module.pre_req_primary.route53_regional_fqdn
+  value       = "${aws_route53_record.record.name}.${data.aws_route53_zone.this.name}"
   description = "FQDN of regional LB Route53 record"
 }
 

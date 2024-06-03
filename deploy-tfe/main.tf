@@ -1,5 +1,10 @@
 locals {
 
+   cert_pem_secret = file("/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe-no-root.pub")
+   cert_pem_private_key_secret = file("/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe.key")
+   ca_certificate_bundle = file("/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe.pub")
+  
+
   tfe_config_yaml = templatefile("${path.module}/template/tfefdo.tpl", {
     TFE_DATABASE_PASSWORD                                   = var.tfe_database_password
     TFE_ENCRYPTION_PASSWORD                                 = var.tfe_encryption_password
@@ -32,9 +37,9 @@ locals {
     METRICS_HTTPS_PORT                                      = "9091"
     PRIVATE_HTTP_PORT                                       = "8080"
     PRIVATE_HTTPS_PORT                                      = "8081"
-    TLS_CA_CERT_DATA                                        = var.tls_ca_cert_data
-    TLS_CERT_DATA                                           = var.tls_cert_data
-    TLS_KEY_DATA                                            = var.tls_key_data
+    TLS_CA_CERT_DATA                                        = locals.ca_certificate_bundle
+    TLS_CERT_DATA                                           = locals.cert_pem_secret
+    TLS_KEY_DATA                                            = locals.cert_pem_private_key_secret
   })
 
 
