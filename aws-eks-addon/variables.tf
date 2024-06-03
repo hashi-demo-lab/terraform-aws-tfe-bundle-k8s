@@ -19,6 +19,7 @@ variable "cluster_version" {
 
 variable "oidc_provider_arn" {
   type    = string
+  default = null
 }
 
 variable "cluster_certificate_authority_data" {

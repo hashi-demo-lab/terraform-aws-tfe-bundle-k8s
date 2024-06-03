@@ -72,8 +72,8 @@ data "aws_eks_cluster_auth" "upstream_auth" {
 }
 
 
-/* resource "aws_eks_identity_provider_config" "oidc_config" {
-  #depends_on   = [module.eks]
+resource "aws_eks_identity_provider_config" "oidc_config" {
+  depends_on   = [module.eks]
   cluster_name = module.eks.cluster_name
 
   oidc {
@@ -84,5 +84,3 @@ data "aws_eks_cluster_auth" "upstream_auth" {
     groups_claim                  = "terraform_organization_name"
   }
 }
-
- */
