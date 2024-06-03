@@ -452,7 +452,7 @@ output "acm_validation_route53_record_fqdns" {
 }
 
 output "route53_regional_record_name" {
-  value       = module.pre_req_primary.route53_regional_record_name
+  value       = aws_route53_record.record.name
   description = "Name of the regional LB Route53 record name"
 }
 

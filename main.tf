@@ -18,7 +18,7 @@ data "aws_route53_zone" "this" {
 
 #aws eip
 resource "aws_eip" "tfe" {
-  domain = "${var.route53_failover_record.record_name}.${var.route53_zone_name}"
+  domain = "vpc"
 }
 
 # route53 record aws resource

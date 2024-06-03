@@ -7,8 +7,8 @@ locals {
     TFE_OBJECT_STORAGE_S3_SERVER_SIDE_ENCRYPTION_KMS_KEY_ID = var.tfe_kms_key_id
     TFE_REDIS_PASSWORD                                      = var.tfe_redis_password
     TFE_CAPACITY_CONCURRENCY                                = var.tfe_capacity_concurrency
-    TFE_DATABASE_HOST                                       = var.tfe_database_host
-    TFE_DATABASE_NAME                                       = var.tfe_database_name
+    TFE_DATABASE_HOST                                       = "${var.db_cluster_endpoint}:5432"
+    TFE_DATABASE_NAME                                       = var.db_cluster_database_name
     TFE_DATABASE_PARAMETERS                                 = var.tfe_database_parameters
     TFE_DATABASE_USER                                       = var.tfe_database_user
     TFE_HOSTNAME                                            = var.tfe_hostname

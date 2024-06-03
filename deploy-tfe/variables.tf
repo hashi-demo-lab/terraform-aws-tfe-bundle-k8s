@@ -38,8 +38,8 @@ variable "tfe_license" {}
 variable "tfe_kms_key_id" {}
 variable "tfe_redis_password" {}
 variable "tfe_capacity_concurrency" { default = 100 }
-variable "tfe_database_host" { /*default = "tfe.c0ynn81zfwhe.ap-northeast-2.rds.amazonaws.com:5432"*/ }
-variable "tfe_database_name" { default = "tfepg" }
+variable "db_cluster_endpoint" { /*default = "tfe.c0ynn81zfwhe.ap-northeast-2.rds.amazonaws.com:5432"*/ }
+variable "db_cluster_database_name" { default = "tfe" }
 variable "tfe_database_parameters" { default = "sslmode=require" }
 variable "tfe_database_user" { default = "tfe" }
 variable "tfe_hostname" { default = "hashicorp.secureaws.net" }
