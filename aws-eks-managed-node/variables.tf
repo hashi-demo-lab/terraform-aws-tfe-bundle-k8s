@@ -18,7 +18,7 @@ variable "vpc_id" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.28"
+  default = "1.29"
 }
 
 variable "tfc_hostname" {
@@ -32,13 +32,15 @@ variable "tfc_kubernetes_audience" {
 
 variable "eks_clusteradmin_arn" {
   type = string
+  default = null
 }
 
 variable "eks_clusteradmin_username" {
   type = string
+  default = null
 }
 
 variable "vpc_security_group_ids" {
   type = string
-
-}
+  default = null
+} 
