@@ -28,6 +28,7 @@ variable "tfc_hostname" {
 
 variable "tfc_kubernetes_audience" {
   type = string
+  default = null
 }
 
 variable "eks_clusteradmin_arn" {
