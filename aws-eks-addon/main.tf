@@ -1,7 +1,7 @@
 locals {
 
   tags = {
-    Blueprint  = var.cluster_name
+    Blueprint = var.cluster_name
   }
 }
 
@@ -20,10 +20,10 @@ module "eks_blueprints_addons" {
 
   # EKS Add-ons
   eks_addons = {
-     aws-ebs-csi-driver = {
+    aws-ebs-csi-driver = {
       most_recent = true
     }
-    vpc-cni    = {
+    vpc-cni = {
       most_recent = true
     }
     kube-proxy = {
@@ -38,11 +38,11 @@ module "eks_blueprints_addons" {
       }
     }
   }
-  
+
 
   # Enable Fargate logging
-  enable_fargate_fluentbit = false
-  enable_external_dns = true
+  enable_fargate_fluentbit            = false
+  enable_external_dns                 = true
   enable_aws_load_balancer_controller = true
   aws_load_balancer_controller = {
     set = [

@@ -1,6 +1,6 @@
 
 variable "vpc_id" {
-  type    = string
+  type = string
 }
 
 variable "region" {
@@ -14,7 +14,7 @@ variable "cluster_name" {
 }
 
 variable "cluster_endpoint" {
-  type    = string
+  type = string
 }
 
 variable "cluster_version" {
@@ -28,5 +28,5 @@ variable "oidc_provider_arn" {
 }
 
 variable "cluster_certificate_authority_data" {
-  type    = string
+  type = string
 }
