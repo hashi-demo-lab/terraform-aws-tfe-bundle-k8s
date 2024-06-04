@@ -24,6 +24,9 @@ env:
     TFE_REDIS_USE_TLS: ${TFE_REDIS_USE_TLS}
 imagePullSecrets:
   - name: terraform-enterprise
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: ${TFE_IRSA_ROLE}
 image:
   name: ${IMAGE_NAME}
   repository: ${IMAGE_REPOSITORY}

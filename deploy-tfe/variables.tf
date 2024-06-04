@@ -68,3 +68,4 @@ variable "private_https_port" { default = 8443 }
 variable "cert_pem_secret" {}
 variable "cert_pem_private_key_secret" {}
 variable "ca_certificate_bundle"  {}
+variable "tfe_irsa_role" {}

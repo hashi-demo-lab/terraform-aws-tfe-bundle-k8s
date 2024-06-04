@@ -38,6 +38,7 @@ locals {
     TLS_CA_CERT_DATA                                        = local.ca_certificate_bundle
     TLS_CERT_DATA                                           = local.cert_pem_secret
     TLS_KEY_DATA                                            = local.cert_pem_private_key_secret
+    TFE_IRSA_ROLE                                           = var.tfe_irsa_role
   })
 }
 

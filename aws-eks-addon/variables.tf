@@ -45,5 +45,5 @@ variable "tfe_namespace" {
 
 variable "tfe_service_account" {
   type    = string
-  default = "tfe-service-account"
+  default = "tfe"
 }

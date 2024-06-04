@@ -68,7 +68,7 @@ resource "kubernetes_namespace_v1" "name" {
 }
 
 #create kubernetes service account
-resource "kubernetes_service_account_v1" "tfe_service_account" {
+/* resource "kubernetes_service_account_v1" "tfe_service_account" {
   metadata {
     name      = var.tfe_service_account
     namespace = kubernetes_namespace_v1.name.metadata[0].name
@@ -79,7 +79,7 @@ resource "kubernetes_service_account_v1" "tfe_service_account" {
 
   automount_service_account_token = true
   
-}
+} */
 
 # Create IAM role for service account (IRSA) and attach TFE managed policy
 module "eks-blueprints-addon" {
