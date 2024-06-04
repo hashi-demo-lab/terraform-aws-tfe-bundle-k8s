@@ -31,12 +31,14 @@ variable "cluster_certificate_authority_data" {
   type = string
 }
 
-variable "iam_role_name" {
+
+
+variable "iam_managed_policy_arn" {
   type = string
-  description = "IAM role name for for TFE"
+  description = "IAM policy arn for for TFE"
 }
 
-variable "iam_role_arn" {
-  type = string
-  description = "IAM role arn for for TFE"
+variable "tfe_namespace" {
+  type    = string
+  default = "tfe"
 }

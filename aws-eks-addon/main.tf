@@ -70,16 +70,16 @@ module "eks-blueprints-addon" {
 
   # IAM role for service account (IRSA)
   create_role = true
-  role_name   = "tfe-sa-role"
+  role_name   = "${var.cluster_name}-tfe-sa-role"
   role_policies = {
-    TFE_Role_POlicy = var.iam_role_arn
+    TFE_Role_Policy = var.iam_managed_policy_arn
   }
 
   oidc_providers = {
     this = {
-      provider_arn    = module.eks.oidc_provider_arn
-      namespace       = "kube-system"
-      service_account = "aws-node"
+      provider_arn    = var.oidc_provider_arn
+      namespace       = "tfe"
+      service_account = "tfe-service-account"
     }
   }
 
