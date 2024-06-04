@@ -72,20 +72,13 @@ resource "kubernetes_service_account_v1" "tfe_service_account" {
   metadata {
     name      = var.tfe_service_account
     namespace = kubernetes_namespace_v1.name.metadata[0].name
-  }
-}
-
-# Annotate the service account with the IAM role ARN
-resource "kubernetes_annotations" "tfe_annotation" {
-  api_version = "v1"
-  kind        = "ServiceAccount"
-  metadata {
-    name = kubernetes_service_account_v1.tfe_service_account.metadata[0].name
-    namespace = kubernetes_namespace_v1.name.metadata[0].name
-  }
-  annotations = {
+    annotations = {
     "eks.amazonaws.com/role-arn" = module.eks-blueprints-addon.iam_role_arn
   }
+  }
+
+  automount_service_account_token = true
+  
 }
 
 # Create IAM role for service account (IRSA) and attach TFE managed policy
@@ -107,7 +100,7 @@ module "eks-blueprints-addon" {
     this = {
       provider_arn    = var.oidc_provider_arn
       namespace       = kubernetes_namespace_v1.name.metadata[0].name
-      service_account = kubernetes_service_account_v1.tfe_service_account.metadata[0].name
+      service_account = var.tfe_service_account
     }
   }
 
