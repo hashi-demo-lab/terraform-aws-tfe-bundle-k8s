@@ -14,3 +14,14 @@ helm install --version v1.2.0 terraform-enterprise hashicorp/terraform-enterpris
 
 kubectl logs terraform-enterprise-b98dbb984-k65s7 --all-containers -n tfe
 kubectl logs terraform-enterprise-b98dbb984-l8fwr --all-containers -n tfe
+
+
+kubectl logs terraform-enterprise-b98dbb984-4qswd --all-containers -n tfe
+kubectl logs terraform-enterprise-b98dbb984-k4rk5 --all-containers -n tfe
+
+
+kubectl logs terraform-enterprise-d8f86b689-cqjv7 --all-containers -n tfe -f
+kubectl logs terraform-enterprise-d8f86b689-78dxn --all-containers -n tfe -f
+
+terraform-enterprise-d8f86b689-cqjv7   0/1     Running   0          29s
+terraform-enterprise-d8f86b689-hjmc6   0/1     Running   0          29s

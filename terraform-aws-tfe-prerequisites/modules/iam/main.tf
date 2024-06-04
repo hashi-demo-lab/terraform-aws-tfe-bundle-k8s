@@ -141,9 +141,11 @@ data "aws_iam_policy_document" "instance_role_policy" {
     effect = "Allow"
     actions = [
       "ec2:DescribeInstances",
+      "pricing:*"
     ]
     resources = ["*"]
   }
+
   statement {
     sid = "ASGHook"
     actions = [

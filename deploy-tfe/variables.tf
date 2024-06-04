@@ -46,10 +46,10 @@ variable "db_password" {}
 variable "tfe_hostname" { /*default = "tfe.simon-lynch.sbx.hashidemos.io"*/ }
 variable "tfe_iact_subnets" { default = "0.0.0.0/0" }
 variable "s3_tfe_app_bucket_name" { /*default = "hashicorp-tfe-s3-common"*/ }
-variable "tfe_object_storage_s3_endpoint" { default = "https://s3.ap-southeast-2.amazonaws.com" }
+variable "tfe_object_storage_s3_endpoint" { default = "" }
 variable "tfe_object_storage_s3_region" { default = "ap-southeast-2" }
 variable "tfe_object_storage_s3_server_side_encryption" { default = "aws:kms" }
-variable "tfe_object_storage_s3_use_instance_profile" { default = "false" }
+variable "tfe_object_storage_s3_use_instance_profile" { default = "true" }
 variable "tfe_object_storage_type" { default = "s3" }
 variable "redis_primary_endpoint" {}
 variable "redis_password" {}
@@ -58,7 +58,7 @@ variable "tfe_redis_use_tls" { default = "true" }
 variable "image_name" { default = "hashicorp/terraform-enterprise" }
 variable "image_repository" { default = "images.releases.hashicorp.com" }
 variable "image_tag" { default = "v202405-1" }
-variable "replica_count" { default = 1 }
+variable "replica_count" { default = 2 }
 variable "service_type" { default = "ClusterIP" }
 variable "metrics_enable" { default = true }
 variable "metrics_http_port" { default = 9090 }
