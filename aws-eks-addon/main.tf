@@ -59,3 +59,29 @@ module "eks_blueprints_addons" {
 
   tags = local.tags
 }
+
+
+module "eks-blueprints-addon" {
+  source  = "aws-ia/eks-blueprints-addon/aws"
+  version = "1.1.1"
+
+  # Disable helm release
+  create_release = false
+
+  # IAM role for service account (IRSA)
+  create_role = true
+  role_name   = "tfe-sa-role"
+  role_policies = {
+    TFE_Role_POlicy = var.iam_role_arn
+  }
+
+  oidc_providers = {
+    this = {
+      provider_arn    = module.eks.oidc_provider_arn
+      namespace       = "kube-system"
+      service_account = "aws-node"
+    }
+  }
+
+  tags = local.tags
+}

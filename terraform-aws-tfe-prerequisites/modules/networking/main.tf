@@ -40,12 +40,14 @@ module "vpc" {
   }
   private_subnet_tags = {
     Name = "${var.friendly_name_prefix}-private"
+    "kubernetes.io/role/internal-elb" = 1
   }
   public_route_table_tags = {
     Name = "${var.friendly_name_prefix}-${var.product}-rtb-public"
   }
   public_subnet_tags = {
     Name = "${var.friendly_name_prefix}-public"
+    "kubernetes.io/role/elb" = 1
   }
   vpc_tags = {
     Name = "${var.friendly_name_prefix}-${var.product}-vpc"

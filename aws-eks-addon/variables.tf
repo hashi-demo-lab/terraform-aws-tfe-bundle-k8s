@@ -30,3 +30,13 @@ variable "oidc_provider_arn" {
 variable "cluster_certificate_authority_data" {
   type = string
 }
+
+variable "iam_role_name" {
+  type = string
+  description = "IAM role name for for TFE"
+}
+
+variable "iam_role_arn" {
+  type = string
+  description = "IAM role arn for for TFE"
+}

@@ -28,15 +28,8 @@ image:
   name: ${IMAGE_NAME}
   repository: ${IMAGE_REPOSITORY}
   tag: ${IMAGE_TAG}
-
 replicaCount: ${REPLICA_COUNT}
-service:
-  type: ${SERVICE_TYPE}
 tfe:
-  metrics:
-    enable: ${METRICS_ENABLE}
-    httpPort: ${METRICS_HTTP_PORT}
-    httpsPort: ${METRICS_HTTPS_PORT}
   privateHttpPort: ${PRIVATE_HTTP_PORT}
   privateHttpsPort: ${PRIVATE_HTTPS_PORT}
 tls:

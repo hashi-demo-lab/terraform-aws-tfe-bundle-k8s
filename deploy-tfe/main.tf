@@ -33,9 +33,6 @@ locals {
     IMAGE_TAG                                               = var.image_tag
     REPLICA_COUNT                                           = var.replica_count
     SERVICE_TYPE                                            = var.service_type
-    METRICS_ENABLE                                          = "false"
-    METRICS_HTTP_PORT                                       = "9090"
-    METRICS_HTTPS_PORT                                      = "9091"
     PRIVATE_HTTP_PORT                                       = "8080"
     PRIVATE_HTTPS_PORT                                      = "8081"
     TLS_CA_CERT_DATA                                        = local.ca_certificate_bundle
