@@ -12,3 +12,8 @@ output "eks_addons" {
   description = "Map of attributes for each EKS addons enabled"
   value       = module.eks_blueprints_addons.eks_addons
 }
+
+output "irsa_role_arn" {
+  value = module.eks-blueprints-addon.iam_role_arn
+  description = "role arn for tfe service account"
+}
