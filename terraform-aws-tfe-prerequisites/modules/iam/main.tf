@@ -146,7 +146,7 @@ data "aws_iam_policy_document" "instance_role_policy" {
     resources = ["*"]
   }
 
-  statement {
+  /* statement {
     sid = "ASGHook"
     actions = [
       "autoscaling:CompleteLifecycleAction",
@@ -157,7 +157,7 @@ data "aws_iam_policy_document" "instance_role_policy" {
       variable = "autoscaling:ResourceTag/asg-hook"
       values   = ["${local.name}-asg-hook"]
     }
-  }
+  } */
 }
 
 resource "aws_iam_policy" "instance_role_policy" {
