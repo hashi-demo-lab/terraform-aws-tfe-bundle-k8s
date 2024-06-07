@@ -47,3 +47,7 @@ variable "tfe_service_account" {
   type    = string
   default = "tfe"
 }
+
+variable "external_dns_route53_zone_arns" {
+  type = list(string)
+}

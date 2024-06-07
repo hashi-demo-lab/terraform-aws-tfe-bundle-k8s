@@ -42,7 +42,10 @@ module "eks_blueprints_addons" {
 
   # Enable Fargate logging
   enable_fargate_fluentbit            = false
+  
   enable_external_dns                 = true
+  external_dns_route53_zone_arns      = var.external_dns_route53_zone_arns
+
   enable_aws_load_balancer_controller = true
   aws_load_balancer_controller = {
     set = [
@@ -66,6 +69,9 @@ resource "kubernetes_namespace_v1" "name" {
     name = var.tfe_namespace
   } 
 }
+
+# Not required created by the TFE helm chart, K8s sa matches tfe namespace name
+# annotations also via helm
 
 #create kubernetes service account
 /* resource "kubernetes_service_account_v1" "tfe_service_account" {
