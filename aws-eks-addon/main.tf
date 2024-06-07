@@ -15,9 +15,6 @@ module "eks_blueprints_addons" {
   oidc_provider_arn     = var.oidc_provider_arn
   enable_argo_workflows = false
 
-  # We want to wait for the Fargate profiles to be deployed first
-  #create_delay_dependencies = [for prof in module.eks.fargate_profiles : prof.fargate_profile_arn]
-
   # EKS Add-ons
   eks_addons = {
     aws-ebs-csi-driver = {
@@ -69,23 +66,6 @@ resource "kubernetes_namespace_v1" "name" {
     name = var.tfe_namespace
   } 
 }
-
-# Not required created by the TFE helm chart, K8s sa matches tfe namespace name
-# annotations also via helm
-
-#create kubernetes service account
-/* resource "kubernetes_service_account_v1" "tfe_service_account" {
-  metadata {
-    name      = var.tfe_service_account
-    namespace = kubernetes_namespace_v1.name.metadata[0].name
-    annotations = {
-    "eks.amazonaws.com/role-arn" = module.eks-blueprints-addon.iam_role_arn
-  }
-  }
-
-  automount_service_account_token = true
-  
-} */
 
 # Create IAM role for service account (IRSA) and attach TFE managed policy
 module "eks-blueprints-addon" {
