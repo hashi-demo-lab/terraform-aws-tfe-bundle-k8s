@@ -21,17 +21,6 @@ resource "aws_eip" "tfe" {
   domain = "vpc"
 }
 
-# route53 record aws resource
-resource "aws_route53_record" "record" {
-  zone_id = data.aws_route53_zone.this.zone_id
-  name    = var.route53_failover_record.record_name
-  type    = "A"
-  ttl     = "300"
-
-  records = [aws_eip.tfe.public_ip]
-}
-
-
 
 # Certificate Generation
 module "acm" {
