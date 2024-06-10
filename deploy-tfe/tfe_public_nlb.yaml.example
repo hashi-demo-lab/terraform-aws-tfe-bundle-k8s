@@ -1,0 +1,50 @@
+env:
+  secrets:
+    TFE_DATABASE_PASSWORD: <>
+    TFE_ENCRYPTION_PASSWORD: <>
+    TFE_LICENSE: <>
+    TFE_OBJECT_STORAGE_S3_SERVER_SIDE_ENCRYPTION_KMS_KEY_ID: arn:aws:kms:ap-southeast-2:855831148133:key/8dc848e1-4f27-44fa-a113-1474106bef64
+    TFE_REDIS_PASSWORD: <>
+  variables:
+    TFE_CAPACITY_CONCURRENCY: 10
+    TFE_DATABASE_HOST: tfefdo-06430b.cluster-ckfdrh72yimx.ap-southeast-2.rds.amazonaws.com:5432
+    TFE_DATABASE_NAME: tfe
+    TFE_DATABASE_PARAMETERS: sslmode=require
+    TFE_DATABASE_USER: tfe
+    TFE_HOSTNAME: tfe.simon-lynch.sbx.hashidemos.io
+    TFE_IACT_SUBNETS: 0.0.0.0/0
+    TFE_OBJECT_STORAGE_S3_BUCKET: tfefdo-06430b-tfe-app-ap-southeast-2
+    TFE_OBJECT_STORAGE_S3_ENDPOINT: 
+    TFE_OBJECT_STORAGE_S3_REGION: ap-southeast-2
+    TFE_OBJECT_STORAGE_S3_SERVER_SIDE_ENCRYPTION: aws:kms
+    TFE_OBJECT_STORAGE_S3_USE_INSTANCE_PROFILE: true
+    TFE_OBJECT_STORAGE_TYPE: s3
+    TFE_REDIS_HOST: master.tfefdo-06430b-redis-rep-group.yeo1ox.apse2.cache.amazonaws.com
+    TFE_REDIS_USE_AUTH: true
+    TFE_REDIS_USE_TLS: true
+imagePullSecrets:
+  - name: terraform-enterprise
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::855831148133:role/eks-tfe-tfe-sa-role-20240604001013692400000001
+image:
+  name: hashicorp/terraform-enterprise
+  repository: images.releases.hashicorp.com
+  tag: v202405-1
+service:
+  type: LoadBalancer
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-0315244a86a34f0c6
+    service.beta.kubernetes.io/aws-load-balancer-type: "external"
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0dd05ad22d5b815be
+    external-dns.alpha.kubernetes.io/hostname: tfe.simon-lynch.sbx.hashidemos.io
+replicaCount: 2
+tfe:
+  privateHttpPort: 8080
+  privateHttpsPort: 8081
+tls:
+  caCertData: <>
+  certData: <>
+  keyData: <>
