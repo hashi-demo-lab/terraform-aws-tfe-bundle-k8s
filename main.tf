@@ -82,7 +82,9 @@ module "pre_req_primary" {
     db_username              = var.db_username
     db_password              = var.db_password
     db_database_name         = var.db_database_name
-    database_subnets = var.
+    db_subnet_ids = var.db_subnet_ids
+
+
 
     # Load Balancer
     create_lb                 = false
