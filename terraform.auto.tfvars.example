@@ -1,0 +1,107 @@
+#------------------------------------------------------------------------------
+# General
+#------------------------------------------------------------------------------
+
+# Prefix for all resources created by this module
+friendly_name_prefix = "tfefdo"
+
+# This has been commented to ensure users are prompted for their region. Uncomment it and supply your region here.
+region = "ap-southeast-2"
+
+# AWS Tagging Configuration
+common_tags = {
+  deployment = "dev"
+  site       = "one"
+}
+
+# TFE Deployment Configuration
+tfe_active_active = true
+product           = "tfefdo"
+
+create_ssh_keypair = false
+
+#------------------------------------------------------------------------------
+# Network Configuration
+#------------------------------------------------------------------------------
+vpc_enable_ssm = true
+
+route53_zone_name = "simon-lynch.sbx.hashidemos.io"
+route53_failover_record = {
+  record_name         = "tfe"
+  set_id              = "fso1"
+  lb_failover_primary = true
+}
+
+
+#------------------------------------------------------------------------------
+# Database Configuration
+#------------------------------------------------------------------------------
+db_username      = "tfe"
+db_password      = "<>"
+db_database_name = "tfe"
+
+create_redis_replication_group = true
+redis_password                 = "<>"
+
+#------------------------------------------------------------------------------
+# Secret Manager Configuration - Initial TFE Secrets
+#------------------------------------------------------------------------------
+secretsmanager_secrets = {
+  tfe = {
+    license = {
+      name        = "tfe-license"
+      description = "TFE License for FDO"
+      path        = "/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/terraform.hclic"
+    }
+    console_password = {
+      name        = "console_password-test"
+      description = "Console password used in the TFE installation"
+      generate    = true
+    }
+    enc_password = {
+      name        = "enc_password-test"
+      description = "Encryption password used in the TFE installation"
+      generate    = true
+    }
+  }
+  cert_pem_secret = {
+    name = "cert_pem_public"
+    path = "/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe-no-root.pub"
+  }
+  cert_pem_private_key_secret = {
+    name = "cert_pem_private"
+    path = "/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe.key"
+  }
+  ca_certificate_bundle = {
+    name = "cert_pem_bundle"
+    path = "/Users/simon.lynch/git/terraform-aws-tfe-bundle-k8s/files/tfe.pub"
+  }
+}
+
+#------------------------------------------------------------------------------
+# IAM Configuration
+#------------------------------------------------------------------------------
+iam_resources = {
+  role_name   = "role"
+  policy_name = "policy"
+  ssm_enable  = true
+}
+
+#------------------------------------------------------------------------------
+# S3 Configuration
+#------------------------------------------------------------------------------
+s3_buckets = {
+  bootstrap = {
+    bucket_name   = "tfe-bootstrap"
+    force_destroy = true
+  },
+  tfe_app = {
+    bucket_name   = "tfe-app"
+    force_destroy = true
+  },
+  logging = {
+    bucket_name   = "tfe-logging"
+    force_destroy = true
+  }
+}
+
