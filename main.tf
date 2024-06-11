@@ -1,3 +1,5 @@
+/* 
+
 #Certificate
 module "tfe-cert" {
   source = "./supplemental-modules/generate-cert"
@@ -32,6 +34,7 @@ module "acm" {
   validation_method         = var.acm_validation_method
 }
 
+*/
 
 
 # TFE AWS Pre-requisites
@@ -43,18 +46,18 @@ module "pre_req_primary" {
     product              = "tfefdo"
     tfe_active_active    = var.tfe_active_active
 
-    create_vpc = true
+    create_vpc = false
 
     # * Collapsed deployment example. Because `database_subnets` is `[]` the redis and databases will be deployed on the private subnets with TFE
     database_subnets = []
     vpc_enable_ssm   = var.vpc_enable_ssm
 
     # Secrets Manager
-    create_secrets         = true
+    create_secrets         = false #true
     secretsmanager_secrets = var.secretsmanager_secrets
 
     # KMS
-    create_kms = true
+    create_kms = false #true
 
     # IAM
     create_iam_resources = true

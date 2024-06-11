@@ -10,8 +10,6 @@ region = "ap-southeast-2"
 
 # AWS Tagging Configuration
 common_tags = {
-  deployment = "dev"
-  site       = "one"
 }
 
 # TFE Deployment Configuration
@@ -23,15 +21,16 @@ create_ssh_keypair = false
 #------------------------------------------------------------------------------
 # Network Configuration
 #------------------------------------------------------------------------------
-vpc_enable_ssm = true
+vpc_enable_ssm = false
+vpc_id = "<VPC ID HERE>"
 
-route53_zone_name = "simon-lynch.sbx.hashidemos.io"
+--[[ route53_zone_name = "simon-lynch.sbx.hashidemos.io"
 route53_failover_record = {
   record_name         = "tfe"
   set_id              = "fso1"
   lb_failover_primary = true
 }
-
+ ]]
 
 #------------------------------------------------------------------------------
 # Database Configuration
@@ -41,7 +40,7 @@ db_password      = "<>"
 db_database_name = "tfe"
 
 create_redis_replication_group = true
-redis_password                 = "<>"
+redis_password                 = "<password>"
 
 #------------------------------------------------------------------------------
 # Secret Manager Configuration - Initial TFE Secrets
@@ -84,7 +83,7 @@ secretsmanager_secrets = {
 iam_resources = {
   role_name   = "role"
   policy_name = "policy"
-  ssm_enable  = true
+  ssm_enable  = false
 }
 
 #------------------------------------------------------------------------------

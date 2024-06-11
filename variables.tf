@@ -14,6 +14,12 @@ variable "common_tags" {
   default     = {}
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "ID of the VPC that the cluster will use. (Only used if var.create_vpc is false)"
+  default     = null
+}
+
 variable "vpc_enable_ssm" {
   type        = bool
   description = "Boolean that when true will create a security group allowing port 443 to the private_subnets within the VPC (if create_vpc is true)"
