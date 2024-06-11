@@ -95,14 +95,17 @@ s3_buckets = {
   bootstrap = {
     bucket_name   = "tfe-bootstrap"
     force_destroy = true
+    kms_key_arn = ""
   },
   tfe_app = {
     bucket_name   = "tfe-app"
     force_destroy = true
+    kms_key_arn = ""
   },
   logging = {
     bucket_name   = "tfe-logging"
     force_destroy = true
+    kms_key_arn = ""
   }
 }
 
