@@ -19,7 +19,6 @@ variable "vpc_id" {
   description = "ID of the VPC that the cluster will use. (Only used if var.create_vpc is false)"
   default     = null
 }
-
 variable "vpc_enable_ssm" {
   type        = bool
   description = "Boolean that when true will create a security group allowing port 443 to the private_subnets within the VPC (if create_vpc is true)"
@@ -280,9 +279,22 @@ variable "db_password" {
   }
 }
 
+
+variable "db_subnet_ids" {
+  type        = list(string)
+  description = "A list of subnets IDs that will be used when creating the subnet group. If this is passed in along with create_db_subnet_group = true and a subnet group isn't then it will be created based on the IDs in this list."
+  default     = []
+}
+
 variable "db_database_name" {
   type        = string
   description = "Name of the database that will be created and used"
+}
+
+variable "redis_subnet_ids" {
+  type        = list(string)
+  description = "List of subnet IDs to use for Redis replication group subnet group."
+  default     = []
 }
 
 variable "redis_password" {

@@ -49,7 +49,7 @@ module "pre_req_primary" {
     create_vpc = false
 
     # * Collapsed deployment example. Because `database_subnets` is `[]` the redis and databases will be deployed on the private subnets with TFE
-    database_subnets = []
+    
     vpc_enable_ssm   = var.vpc_enable_ssm
 
     # Secrets Manager
@@ -82,6 +82,7 @@ module "pre_req_primary" {
     db_username              = var.db_username
     db_password              = var.db_password
     db_database_name         = var.db_database_name
+    database_subnets = var.
 
     # Load Balancer
     create_lb                 = false
@@ -91,4 +92,5 @@ module "pre_req_primary" {
     # Redis
     create_redis_replication_group = var.create_redis_replication_group
     redis_password                 = var.redis_password
+    redis_subnet_ids = var.redis_subnet_ids
 }
