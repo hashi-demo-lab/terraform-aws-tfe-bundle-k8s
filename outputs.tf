@@ -451,7 +451,7 @@ output "acm_validation_route53_record_fqdns" {
   description = "List of FQDNs built using the zone domain and name"
 }
 
-output "route53_regional_record_name" {
+/* output "route53_regional_record_name" {
   value       = aws_route53_record.record.name
   description = "Name of the regional LB Route53 record name"
 }
@@ -464,7 +464,7 @@ output "route53_regional_fqdn" {
 output "route53_failover_record_name" {
   value       = module.pre_req_primary.route53_failover_record_name
   description = "Name of the failover LB Route53 record name"
-}
+} */
 
 output "route53_failover_fqdn" {
   value       = module.pre_req_primary.route53_failover_fqdn
