@@ -47,6 +47,7 @@ module "pre_req_primary" {
     tfe_active_active    = var.tfe_active_active
 
     create_vpc = false
+    vpc_id = var.vpc_id
 
     # * Collapsed deployment example. Because `database_subnets` is `[]` the redis and databases will be deployed on the private subnets with TFE
     
