@@ -48,3 +48,21 @@ tls:
   caCertData: <>
   certData: <>
   keyData: <>
+agentWorkerPodTemplate:
+  metadata:
+    labels:
+      app: pod-template-app-tfe
+      info: pod-template-info-tfe
+    annotations:
+      app: pod-template-app
+  spec:
+    containers:
+      - name: tfc-agent
+        image: hashicorp/tfc-agent:latest
+        env:
+        - name: HTTP_PROXY
+          value: "http://proxy.example.com:8080"
+        - name: HTTPS_PROXY
+          value: "http://proxy.example.com:8080"
+        - name: NO_PROXY
+          value: "localhost,127.0.0.1,.example.com"
